@@ -1,0 +1,7 @@
+{% extends 'header.html' %}
+{% block contents %}
+{% for room in rooms %}
+<h1>{{room}}</h1>
+<h2>{{room.content}}</h2>
+{% endfor %}
+{% endblock %}
