@@ -3,9 +3,13 @@ from django.http import HttpResponse
 from .models import room
 # Create your views here.
 def index (request):
-    return render (request,'index.html')
-def room_list (request):
     rooms = room.objects.all()
+    context = {
+        'rooms': rooms
+    }
+    return render (request,'index.html',context)
+def room_list (request,pk):
+    rooms = room.objects.filter(id=pk)
     context = {
         'rooms': rooms
     }
