@@ -9,3 +9,5 @@ class room(models.Model):
     updates_date = models.DateTimeField(auto_now=True,null=True)
     def __str__(self) :
         return self.room_name
+
+    
