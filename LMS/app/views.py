@@ -3,21 +3,44 @@ from django.http import HttpResponse
 from .models import room
 from .forms import UserRegisterForm,UserLogin
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index (request):
+   
+    return render (request,'index.html')
+@login_required
+def home (request):
     rooms = room.objects.all()
     context = {
         'rooms': rooms
     }
-    return render (request,'index.html',context)
+    return render (request,'home.html',context)
 
 
-def login(request):
-    loginform = UserLogin()
-    context = {
+def user_login(request):
+     if request.method == 'POST':
+        loginform = UserLogin(request.POST)
+        if loginform.is_valid():
+            email = request.POST['email']
+            password = request.POST['password']
+            # Authenticate using the email field
+            try:
+                username = User.objects.get(email=email).username
+                user = authenticate(request, username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('home')  # Redirect to the home page or any other page
+                else:
+                    loginform.add_error(None, "Invalid email or password")
+            except User.DoesNotExist:
+                loginform.add_error(None, "Invalid email or password")
+     else:
+        loginform = UserLogin()
+     context = {
         'loginform': loginform
     }
-    return render(request, 'login.html', context)
+     return render(request, 'login.html',context)
 
 def room_list (request,pk):
     rooms = room.objects.filter(id=pk)
@@ -43,3 +66,5 @@ def registration(request):
         'form': form
     }
     return render(request,'register.html',context)
+def User_logout(request):
+    return redirect('login')

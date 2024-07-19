@@ -1,0 +1,14 @@
+{%  extends 'header.html' %}
+
+{% block contents %}
+
+<h1 class="body">I am index.html</h1>
+
+{% for room in rooms %}
+
+<a href="{% url 'room' room.id %}">
+<h1>{{room.room_name}}</h1></a>
+
+{% endfor %}
+<a href="{% url 'User_logout' %}">Logout</a>
+{% endblock %}

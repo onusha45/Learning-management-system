@@ -4,10 +4,8 @@
 
 <h1 class="body">I am index.html</h1>
 
-{% for room in rooms %}
-<h1>{{ room.id }}</h1>
-<a href="{% url 'room' room.id %}">
-{{room.room_name}}</a>
 
-{% endfor %}
+<a href="{% url 'home' %}"> <h1>Rooms</h1></a>
+
+
 {% endblock %}
