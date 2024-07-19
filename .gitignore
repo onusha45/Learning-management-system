@@ -1,2 +1,3 @@
-env/
-dbsqlite
+venv/
+db.sqlite3
+
