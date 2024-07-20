@@ -1,9 +1,16 @@
-<h1>Welcome to login</h1>
-
-<form method="post">
-
-    {% csrf_token %}
-    {{ loginform.as_p }}
-    <input type="submit">
-    <h3>Dont have account <a href="{% url 'registration' %}">Create an account</a></h3>
-</form>
+{% extends 'header.html' %}
+{% load static %}
+{% block title %}Login{% endblock %}
+{% block contents %}
+    <div class="container">
+        <h1 class="login-header">Welcome to Login</h1>
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ loginform.as_p }}
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <h3>Don't have an account? <a href="{% url 'registration' %}">Create an account</a></h3>
+    </div>
+{% endblock %}
