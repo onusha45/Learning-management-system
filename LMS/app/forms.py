@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import room
 
 
 
@@ -16,3 +17,7 @@ class UserLogin(forms.ModelForm):
         model = User
         fields = ['email','password']
   
+class RoomForm(forms.ModelForm):
+    class Meta:
+        model = room
+        fields = ['room_name', 'Description']

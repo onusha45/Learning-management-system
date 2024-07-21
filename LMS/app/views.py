@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import room
-from .forms import UserRegisterForm,UserLogin
+from .forms import UserRegisterForm,UserLogin,RoomForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
@@ -40,17 +40,33 @@ def user_login(request):
      context = {
         'loginform': loginform
     }
-     return render(request, 'login.html',context)
+     return render(request, 'user_login.html',context)
 
+@login_required
 def room_list (request,pk):
     rooms = room.objects.filter(id=pk)
     context = {
         'rooms': rooms
     }
-    return render(request,"room.html",context)
+    return render(request,"room_list.html",context)
+
+@login_required
+def room_register(request):
+    if request.method == 'POST':
+        form = RoomForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # Replace 'room_list' with the name of your URL pattern for listing rooms
+    else:
+        form = RoomForm()
+    
+    context = {
+        'room_form': form
+    }
+    return render(request, "roomregistration.html", context)
 
 
-def registration(request):
+def user_registration(request):
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():
@@ -65,6 +81,8 @@ def registration(request):
     context = {
         'form': form
     }
-    return render(request,'register.html',context)
-def User_logout(request):
-    return redirect('login')
+    return render(request,'user_register.html',context)
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect('user_login')

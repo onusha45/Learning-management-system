@@ -6,9 +6,11 @@
 
 {% for room in rooms %}
 
-<a href="{% url 'room' room.id %}">
+<a href="{% url 'room_list' room.id %}">
 <h1>{{room.room_name}}</h1></a>
 
 {% endfor %}
-<a href="{% url 'User_logout' %}">Logout</a>
+<a href="{% url 'room_register' %}"> Room Registration</a>
+
+<a href="{% url 'user_logout' %}">Logout</a>
 {% endblock %}
