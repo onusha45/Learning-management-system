@@ -5,9 +5,11 @@
 <h1 class="body">I am index.html</h1>
 
 {% for room in rooms %}
-
+<span>@{{room.host.username}}</span>
 <a href="{% url 'room_list' room.id %}">
 <h1>{{room.room_name}}</h1></a>
+<small>{{ room.topic.name }}</small>
+<hr>
 
 {% endfor %}
 <a href="{% url 'room_register' %}"> Room Registration</a>

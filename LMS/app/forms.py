@@ -20,4 +20,4 @@ class UserLogin(forms.ModelForm):
 class RoomForm(forms.ModelForm):
     class Meta:
         model = room
-        fields = ['room_name', 'Description']
+        fields = ['room_name', 'Description','host','topic']
