@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     #custom app
     'app.apps.AppConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
