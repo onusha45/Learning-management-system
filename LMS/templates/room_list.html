@@ -1,15 +1,27 @@
 {% extends 'header.html' %}
 
 {% block contents %}
-
-
-    {% for room in rooms %}
-    
-      <h2>{{ room.room_name }}</h2>
-      <h1>{{ room.content }}</h1>
-      <h1>{{room.created_date}}</h1>
-      <h1>{{room.updates_date}}</h1>
-    {% endfor %}
-<a href="{% url 'home' %}">Back to home </a>
-
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            {% for room in rooms %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="card-title">{{ room.room_name }}</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ room.content }}</p>
+                    <p class="card-text">
+                        <small class="text-muted">Created: {{ room.created_date }}</small><br>
+                        <small class="text-muted">Updated: {{ room.updates_date }}</small>
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="text-center">
+                <a href="{% url 'home' %}" class="btn btn-primary">Back to home</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

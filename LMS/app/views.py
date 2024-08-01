@@ -86,3 +86,9 @@ def user_registration(request):
 def user_logout(request):
     logout(request)
     return redirect('user_login')
+def room_delete(request,pk):
+      rooms = room.objects.get(id=pk)
+      rooms.delete()
+      print(pk)
+      return redirect('home')
+

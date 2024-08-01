@@ -1,19 +1,23 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <title>{% block title %}Document{% endblock %}</title>
-</head>
-<body>
-    <header>
-        <h2 class="site-header"></h2>
-    </header>
-    <main>
-        {% block contents %}
-        {% endblock %}
-    </main>
-</body>
+
+   
+ 
+  </head>
+  <body>
+    
+      {% block contents %}
+       {% endblock %}
+    
+
+   
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+  </body>
 </html>
