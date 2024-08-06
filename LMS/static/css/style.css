@@ -1,9 +1,5 @@
-body {
-  align-items: unset !important;
-  display: unset !important;
-  height: unset !important;
-}
+.home-container{
 
-footer {
-  background-color: red;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
 }

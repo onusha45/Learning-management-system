@@ -1,0 +1,14 @@
+{% extends 'header.html' %}
+{% block title %}Room Form{% endblock %}
+{% block contents %}
+<div class="container">
+    <h1 class="form-header">Room Title</h1>
+    <form method="post" class="form-layout">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ room_form.as_p }}
+        </div>
+        <button type="submit" class="button">Submit</button>
+    </form>
+</div>
+{% endblock %}

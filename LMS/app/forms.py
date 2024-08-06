@@ -21,3 +21,8 @@ class RoomForm(forms.ModelForm):
     class Meta:
         model = room
         fields = ['room_name', 'Description','host','topic']
+
+class RoomEditForm(forms.ModelForm):
+    class Meta:
+        model = room
+        fields = ['room_name', 'Description','topic']

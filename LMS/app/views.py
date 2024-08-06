@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import room
-from .forms import UserRegisterForm,UserLogin,RoomForm
+from .models import room ,Topic
+from .forms import UserRegisterForm,UserLogin,RoomForm,RoomEditForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
@@ -10,12 +10,15 @@ def index (request):
    
     return render (request,'index.html')
 @login_required
-def home (request):
-    rooms = room.objects.all()
+def room_home (request):
+    q =request.GET.get('q')
+    rooms = room.objects.filter(topic__name =q)
+    topics = Topic.objects.all()
     context = {
-        'rooms': rooms
+        'rooms': rooms,
+        'topics': topics
     }
-    return render (request,'home.html',context)
+    return render (request,'room_home.html',context)
 
 
 def user_login(request):
@@ -30,7 +33,7 @@ def user_login(request):
                 user = authenticate(request, username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    return redirect('home')  # Redirect to the home page or any other page
+                    return redirect('room_home')  # Redirect to the home page or any other page
                 else:
                     loginform.add_error(None, "Invalid email or password")
             except User.DoesNotExist:
@@ -56,7 +59,7 @@ def room_register(request):
         form = RoomForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')  # Replace 'room_list' with the name of your URL pattern for listing rooms
+            return redirect('room_home')  # Replace 'room_list' with the name of your URL pattern for listing rooms
     else:
         form = RoomForm()
     
@@ -86,9 +89,22 @@ def user_registration(request):
 def user_logout(request):
     logout(request)
     return redirect('user_login')
+@login_required
 def room_delete(request,pk):
       rooms = room.objects.get(id=pk)
       rooms.delete()
-      print(pk)
-      return redirect('home')
+      return redirect('room_home')
+@login_required
+def room_edit(request,pk):
+    rooms = room.objects.get(id=pk)
 
+    if request.method == "POST":
+        form =RoomEditForm(request.POST,instance=rooms)
+        if form.is_valid():
+            form.save()
+            return redirect('room_home')
+    form = RoomEditForm(instance=rooms)
+    context = {
+        'room_form': form
+    }
+    return render(request ,'room_edit.html',context)

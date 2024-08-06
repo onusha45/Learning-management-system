@@ -12,11 +12,12 @@ from .viewset import TopicViewsets,MessageViewsets,UserViewsets,RoomViewsets
 urlpatterns = [
    
     path('', index , name='index'),
-    path('home/',home,name='home'),
+    path('room_home/',room_home,name='room_home'),
     path('user_registration/',user_registration,name='user_registration'),
     path('user_login/',user_login,name='user_login'),
     path('user_logout',user_logout,name='user_logout'),
     path('room_list/<int:pk>/',room_list, name = 'room_list'),
     path('room_register/',room_register, name = 'room_register'),
     path('room_delete/<int:pk>/',room_delete, name = 'room_delete'),
+    path('room_edit/<int:pk>/',room_edit, name = 'room_edit'),
 ]
