@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import room
+from .models import Room
 
 
 
@@ -19,10 +19,18 @@ class UserLogin(forms.ModelForm):
   
 class RoomForm(forms.ModelForm):
     class Meta:
-        model = room
-        fields = ['room_name', 'Description','host','topic']
+        model = Room
+        fields = ['room_name', 'Description', 'topic']  # Exclude 'host' from the fields
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # Get the user from kwargs
+        super(RoomForm, self).__init__(*args, **kwargs)
+        
+        # Set the host field to the current user
+        if user:
+            self.instance.host = user
 
 class RoomEditForm(forms.ModelForm):
     class Meta:
-        model = room
+        model = Room
         fields = ['room_name', 'Description','topic']

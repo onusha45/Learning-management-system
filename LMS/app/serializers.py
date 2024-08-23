@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Topic,room,Message
+from .models import Topic,Room,Message
 from django.contrib.auth.models import User
 
 
@@ -10,7 +10,7 @@ class TopicSerilizers(serializers.ModelSerializer):
 
 class RoomSerializers(serializers.ModelSerializer):
     class Meta:
-        model = room
+        model = Room
         fields = "__all__"
 
 class MessageSerializers (serializers.ModelSerializer):

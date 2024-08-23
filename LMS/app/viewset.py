@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .models import Topic,room,Message
+from .models import Topic,Room,Message
 from django.contrib.auth.models import User
 from .serializers import TopicSerilizers,UserSerializers,MessageSerializers,RoomSerializers
 
@@ -17,5 +17,5 @@ class MessageViewsets(viewsets.ModelViewSet):
 
 
 class RoomViewsets(viewsets.ModelViewSet):
-    queryset = room.objects.all()
+    queryset = Room.objects.all()
     serializer_class= RoomSerializers
