@@ -2,7 +2,13 @@
 
 {% block contents %}
 <div class="container mt-4">
+    
+    {% if user.profile %}
+    <img src="{{ user.profile.url }}" alt="{{ message.user.username }}" class="profile-pic me-2" height="80px" width="80px" style="border-radius: 50%; display: flex; margin: 0 auto; border: 1px solid black; ">
+    {% else %}
     <h1 class="text-center">{{ user.username }}</h1>
+    {% endif %}
+
     <hr>
     <div class="row">
         <div class="col-md-4 mb-3">
@@ -15,6 +21,9 @@
 
         <div class="col-md-4 mb-3">
             {% include 'activity_component.html' %}
+        </div>
+        <div>
+            {% include 'basehome.html' %}
         </div>
     </div>
 </div>

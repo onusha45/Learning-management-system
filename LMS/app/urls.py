@@ -2,7 +2,8 @@ from django.urls import path,include
 from .views import *
 from rest_framework.routers import DefaultRouter
 from .viewset import TopicViewsets,MessageViewsets,UserViewsets,RoomViewsets
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 # router = DefaultRouter()
 # router.register('topic', TopicViewsets , basename='TopicViewsets'),
@@ -22,4 +23,4 @@ urlpatterns = [
     path('room_edit/<int:pk>/',room_edit, name = 'room_edit'),
     path('delete-message/<int:pk>/',deletemessage, name = 'delete-message'),
     path('profile/<int:pk>',userProfile, name = 'user-profile'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

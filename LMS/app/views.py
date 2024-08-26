@@ -3,9 +3,10 @@ from django.http import HttpResponse
 from django.db.models  import Q
 from .models import Room ,Topic,Message
 from .forms import UserRegisterForm,UserLogin,RoomForm,RoomEditForm
-from django.contrib.auth.models import User
+
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from .models import CustomUser
 # Create your views here.
 def index (request):
    
@@ -42,14 +43,17 @@ def user_login(request):
             password = request.POST['password']
             # Authenticate using the email field
             try:
-                username = User.objects.get(email=email).username
+                username = CustomUser.objects.get(email=email).username
                 user = authenticate(request, username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    return redirect('room_home')  # Redirect to the home page or any other page
+                    if(user.is_superuser):
+                        return redirect('/admin/')
+                    else:
+                        return redirect('room_home')  
                 else:
                     loginform.add_error(None, "Invalid email or password")
-            except User.DoesNotExist:
+            except CustomUser.DoesNotExist:
                 loginform.add_error(None, "Invalid email or password")
      else:
         loginform = UserLogin()
@@ -59,7 +63,7 @@ def user_login(request):
      return render(request, 'user_login.html',context)
 
 def userProfile(request,pk):
-    user =User.objects.get(id=pk)
+    user =CustomUser.objects.get(id=pk)
     rooms = user.room_set.all()
     room_messages =user.message_set.all()
     topics = Topic.objects.all()
@@ -111,13 +115,18 @@ def room_register(request):
      return render(request, "roomregistration.html", context)
 def user_registration(request):
     if request.method == "POST":
-        form = UserRegisterForm(request.POST)
+        form = UserRegisterForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
             password = request.POST.get('password')
             user.set_password(password)
             user.save()
             return redirect('user_login')
+        else:
+            print(form.errors)
+            print(request.FILES)
+            print(request.POST)
+    
     else:
         form = UserRegisterForm()
     

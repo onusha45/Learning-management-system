@@ -3,7 +3,14 @@
   <hr>
   {% for message in room_messages %}
   <div class="border p-3 mb-2 rounded">
-      <small>
+      <small class="d-flex align-items-center">
+        {% if message.user.profile %}
+        <img src="{{ message.user.profile.url }}" alt="{{ message.user.username }}" class="profile-pic me-2" height="20px" width="20px" style="border-radius: 50%;">
+        {% else %}
+        <img src="" alt="{{ message.user.username }}" class="profile-pic me-2">
+        {% endif %}
+
+
           <a href="{% url 'user-profile' message.user.id %}" class="text-dark">@{{ message.user }}</a>
           <span class="text-muted"> {{ message.created_date|timesince }} ago</span>
       </small>
