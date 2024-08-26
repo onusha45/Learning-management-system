@@ -1,0 +1,21 @@
+{% extends 'header.html' %}
+
+{% block contents %}
+<div class="container mt-4">
+    <h1 class="text-center">{{ user.username }}</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            {% include 'topic_components.html' %}
+        </div>
+
+        <div class="col-md-4 mb-3">
+            {% include 'feed_components.html' %}
+        </div>
+
+        <div class="col-md-4 mb-3">
+            {% include 'activity_component.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

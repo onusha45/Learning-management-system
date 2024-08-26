@@ -1,0 +1,38 @@
+{% for room in rooms %}
+    <div class="card mb-4 shadow-sm border-0">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3" style="display: flex; justify-content: space-between;">
+                <div>
+                    <a href="{% url 'user-profile' room.host.id %}" class="text-dark font-weight-bold">
+                        @{{ room.host.username }}
+                    </a>
+                    <h5 class="card-title mt-2">
+                        <a href="{% url 'room_list' room.id %}" class="text-primary text-decoration-none">
+                            {{ room.room_name }}
+                        </a>
+                    </h5>
+                    <span class="badge badge-info">{{ room.topic.name }}</span>
+                </div>
+
+                {% if request.user == room.host %}
+                <div class="btn-group" style="display: flex; flex-direction: column;">
+                    <a href="{% url 'room_edit' room.id %}" class="btn btn-sm btn-warning" style="margin-bottom: 3px;">Edit</a>
+                    <button type="button" class="btn btn-sm btn-danger delete_room" data-room-id="{{ room.id }}">
+                        Delete
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+
+            
+            <div class="d-flex justify-content-between align-items-center mt-3" style="display: flex; flex-direction: column;">
+                <small class="text-muted" style="margin: 2px 0;">
+                    Created {{ room.created_date|timesince }} ago
+                </small>
+                <a href="{% url 'room_list' room.id %}" class="btn btn-sm btn-primary">
+                    View Details
+                </a>
+            </div>
+        </div>
+    </div><hr>
+{% endfor %}

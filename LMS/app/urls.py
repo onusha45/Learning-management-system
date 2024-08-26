@@ -21,4 +21,5 @@ urlpatterns = [
     path('room_delete/<int:pk>/',room_delete, name = 'room_delete'),
     path('room_edit/<int:pk>/',room_edit, name = 'room_edit'),
     path('delete-message/<int:pk>/',deletemessage, name = 'delete-message'),
+    path('profile/<int:pk>',userProfile, name = 'user-profile'),
 ]

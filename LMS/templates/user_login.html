@@ -1,16 +1,29 @@
 {% extends 'header.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 {% block title %}Login{% endblock %}
+
 {% block contents %}
-    <div class="container">
-        <h1 class="login-header">Welcome to Login</h1>
-        <form method="post" class="login-form">
-            {% csrf_token %}
-            <div class="form-group">
-                {{ loginform.as_p }}
+<div class="container-fluid">
+    <div class="row" style="display: flex; justify-content: center;">
+        <div class="col-md-8 col-lg-6 col-xl-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="text-center mb-4">Welcome Back</h1>
+                    <form method="post" class="login-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ loginform|crispy }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </form>
+                </div>
             </div>
-            <button type="submit" class="btn">Login</button>
-        </form>
-        <h3>Don't have an account? <a href="{% url 'user_registration' %}">Create an account</a></h3>
+            <div class="text-center mt-3">
+                <h5>Don't have an account? <a href="{% url 'user_registration' %}" class="text-primary">Create an account</a></h5>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}

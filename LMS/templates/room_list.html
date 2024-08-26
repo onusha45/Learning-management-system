@@ -1,50 +1,62 @@
 {% extends 'header.html' %}
 
 {% block contents %}
-<div class="room-container">
-    <div>
-        <h1>{{ room.room_name }}</h1>
-        <h4>{{ room.Description }}</h4>
+<div class="container mt-5">
+    <div class="row">
 
-        <div class="comment-wrapper">
-            <h3>Conversation</h3>
-            <hr>
-            {% for message in room_messages %}
-            <div>
-                {% if request.user == message.user%}
-             <a href="{% url 'delete-message' message.id %}">Delete</a>
-                 {% endif %}
-                 <hr>
-                <small>@{{ message.user.username }} {{ message.created_date|timesince }} ago</small>
-                <p>{{ message.body }}</p>
-             
+        <div class="col-md-8">
+            <div class="room-details">
+                <h1 class="display-4">{{ room.room_name }}</h1>
+                <p class="lead">{{ room.Description }}</p>
             </div>
-            {% endfor %}
-        {% if request.user.is_authenticated %}
-            <div class="comment-form">
-                <form method="post" action="">
-                    {% csrf_token %}
-                    <input type="text" name="body" placeholder="Write your message here..."/>
-                </form>
+
+            <div class="conversation mt-4">
+                <h3 class="mb-3">Conversation</h3>
+                <div class="conversation-wrapper p-3 border rounded">
+                    {% for message in room_messages %}
+                    <div class="message mb-4 p-3 bg-light rounded">
+                        <div class="d-flex justify-content-between">
+                            <small class="text-muted">@{{ message.user.username }} - {{ message.created_date|timesince }} ago</small>
+                            {% if request.user == message.user %}
+                            <a href="{% url 'delete-message' message.id %}" class="text-danger">Delete</a>
+                            {% endif %}
+                        </div>
+                        <p class="mt-2">{{ message.body }}</p>
+                    </div>
+                    <hr>
+                    {% endfor %}
+
+                    {% if request.user.is_authenticated %}
+                    <div class="comment-form mt-4">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="body" placeholder="Write your message here..." aria-label="Message">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Send</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
-            {% endif %}
         </div>
 
-        <div>
-            <a href="{% url 'room_home' %}" class="btn btn-primary">Back to home</a>
-        </div>
-        <div>
-            <a href="{% url 'room_register' %}" class="btn btn-success">Room Registration</a>
-            <a href="{% url 'user_logout' %}" onclick="return confirm('Are you sure ??')" class="btn btn-secondary">Logout</a>
+        <div class="col-md-4">
+            <div class="participants">
+                <h3 class="mb-3">Participants</h3>
+                <ul class="list-group">
+                    {% for user in participants %}
+                    <li class="list-group-item">@{{user.username}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </div>
-    <div>
-    <h3>Participants</h3>
-    {% for user in participants %}
-    <div>
-        <p>@{{user.username}}</p>
+
+    <div class="mt-5">
+        {% include 'basehome.html' %}
     </div>
-    {% endfor %}
-</div>
 </div>
 {% endblock %}
